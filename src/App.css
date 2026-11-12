@@ -1,0 +1,243 @@
+/* ---------- En-tête et menu ---------- */
+
+.entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 24px;
+  background: var(--couleur-carte);
+  border-bottom: 1px solid var(--couleur-bordure);
+}
+
+.entete h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.menu a {
+  padding: 6px 12px;
+  border-radius: var(--rayon);
+  color: var(--couleur-texte);
+  text-decoration: none;
+}
+
+.menu a:hover {
+  background: var(--couleur-fond);
+}
+
+/* Classe ajoutée automatiquement par NavLink sur le lien de la page actuelle */
+.menu a.active {
+  background: var(--couleur-principale);
+  color: #fff;
+}
+
+/* ---------- Contenu ---------- */
+
+.contenu {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.message {
+  padding: 12px 16px;
+  background: var(--couleur-carte);
+  border-radius: var(--rayon);
+}
+
+.message-erreur {
+  color: var(--couleur-danger-fonce);
+  background: #fee2e2;
+}
+
+/* ---------- Badges ---------- */
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Priorités : badges pleins */
+.badge-haute {
+  background: #b91c1c;
+  color: #fff;
+}
+
+.badge-moyenne {
+  background: #b45309;
+  color: #fff;
+}
+
+.badge-basse {
+  background: #64748b;
+  color: #fff;
+}
+
+/* Statuts : badges clairs */
+.badge-ouvert {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge-en-cours {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.badge-resolu {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* ---------- Accueil : statistiques ---------- */
+
+.statistiques {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 16px;
+  background: var(--couleur-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+}
+
+.stat-nombre {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.boutons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- Champs (filtres et formulaire) ---------- */
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.champ label {
+  font-weight: 600;
+}
+
+/* ---------- Page Tickets : filtres et liste ---------- */
+
+.filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  background: var(--couleur-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+}
+
+.filtres .champ {
+  flex: 1 1 200px;
+  margin-bottom: 0;
+}
+
+.compteur {
+  color: var(--couleur-texte-doux);
+}
+
+.liste-tickets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.ticket,
+.detail-ticket,
+.formulaire {
+  padding: 16px;
+  background: var(--couleur-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+}
+
+.ticket h3,
+.detail-ticket h2,
+.formulaire h2 {
+  margin-top: 0;
+}
+
+.ticket p,
+.detail-ticket p {
+  margin: 6px 0;
+}
+
+.ticket-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.ticket-actions select {
+  flex: 1;
+}
+
+.bouton-danger {
+  background: var(--couleur-danger);
+}
+
+.bouton-danger:hover {
+  background: var(--couleur-danger-fonce);
+}
+
+/* ---------- Formulaire et détail ---------- */
+
+.formulaire,
+.detail-ticket {
+  max-width: 600px;
+}
+
+.formulaire textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.erreur {
+  margin: 0;
+  color: var(--couleur-danger-fonce);
+  font-size: 0.9rem;
+}
+
+/* ---------- Petits écrans (téléphones) ---------- */
+
+@media (max-width: 600px) {
+  .entete {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 16px;
+  }
+
+  .contenu {
+    padding: 16px;
+  }
+}

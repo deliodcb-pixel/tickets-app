@@ -1,0 +1,70 @@
+/* Styles de base communs à toute l'application */
+
+:root {
+  --couleur-fond: #f4f6f9;
+  --couleur-carte: #ffffff;
+  --couleur-texte: #1f2933;
+  --couleur-texte-doux: #5f6b7a;
+  --couleur-bordure: #dde3ea;
+  --couleur-principale: #2563eb;
+  --couleur-principale-fonce: #1d4ed8;
+  --couleur-danger: #dc2626;
+  --couleur-danger-fonce: #b91c1c;
+  --rayon: 8px;
+
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+input,
+select,
+textarea {
+  padding: 8px 10px;
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  background: #fff;
+  color: inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--couleur-principale);
+  outline-offset: 1px;
+}
+
+button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: var(--rayon);
+  background: var(--couleur-principale);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--couleur-principale-fonce);
+}

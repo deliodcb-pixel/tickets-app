@@ -1,34 +1,95 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
-import Ticket from './components/Ticket';
+import Accueil from './pages/Accueil';
+import Tickets from './pages/Tickets';
+import DetailTicket from './pages/DetailTicket';
+import PageIntrouvable from './pages/PageIntrouvable';
+import TicketForm from './components/TicketForm';
 import './App.css';
 
-const tickets = [
-  { id: 1, titre: "Imprimante en panne", auteur: "M. Duchesne", priorite: "Haute", statut: "Ouvert" },
-  { id: 2, titre: "Accès VPN refusé", auteur: "M. Fadi", priorite: "Moyenne", statut: "En cours" },
-  { id: 3, titre: "Écran qui clignote", auteur: "M. Délio", priorite: "Basse", statut: "Résolu" },
-];
+const API = "http://localhost:3001/tickets";
 
 function App() {
-  const [traites, setTraites] = useState(0);
+  const [tickets, setTickets] = useState([]);
+  const [chargement, setChargement] = useState(true);
+  const [erreur, setErreur] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function charger() {
+      try {
+        const reponse = await fetch(API);
+        if (!reponse.ok) throw new Error("Erreur " + reponse.status);
+        setTickets(await reponse.json());
+      } catch (e) {
+        setErreur(e.message);
+      } finally {
+        setChargement(false);
+      }
+    }
+    charger();
+  }, []);
+
+  async function supprimerTicket(id) {
+    try {
+      const reponse = await fetch(`${API}/${id}`, { method: "DELETE" });
+      if (!reponse.ok) throw new Error("Erreur " + reponse.status);
+      setTickets((anciens) => anciens.filter((t) => t.id !== id));
+    } catch (e) {
+      setErreur(e.message);
+    }
+  }
+
+  async function changerStatut(id, nouveauStatut) {
+    try {
+      const reponse = await fetch(`${API}/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ statut: nouveauStatut }),
+      });
+      if (!reponse.ok) throw new Error("Erreur " + reponse.status);
+      setTickets((anciens) => anciens.map((t) => (t.id === id ? { ...t, statut: nouveauStatut } : t)));
+    } catch (e) {
+      setErreur(e.message);
+    }
+  }
+
+  async function ajouterTicket(form) {
+    try {
+      const reponse = await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, statut: "Ouvert" }),
+      });
+      if (!reponse.ok) throw new Error("Erreur " + reponse.status);
+      const nouveauTicket = await reponse.json();
+      setTickets((anciens) => [...anciens, nouveauTicket]);
+      navigate("/tickets");
+    } catch (e) {
+      setErreur(e.message);
+    }
+  }
 
   return (
     <div>
       <Header />
-      <p>Bienvenue sur l'application WebDev Solutions.</p>
-      {tickets.map((t) => (
-        <Ticket key={t.id} {...t} />
-      ))}
-      <p>Tickets traités : {traites}</p>
-      <button onClick={() => setTraites(traites + 1)}>
-        Marquer un ticket comme traité
-      </button>
-      <button onClick={() => setTraites(Math.max(traites - 1, 0))}>
-        Annuler
-      </button>
-      <button onClick={() => setTraites(0)}>
-        Remettre à zéro
-      </button>
+      <main className="contenu">
+        {chargement && <p className="message">Chargement...</p>}
+        {erreur && <p className="message message-erreur">Problème avec l'API : {erreur}</p>}
+        {!chargement && !erreur && (
+          <Routes>
+            <Route path="/" element={<Accueil tickets={tickets} />} />
+            <Route
+              path="/tickets"
+              element={<Tickets tickets={tickets} supprimerTicket={supprimerTicket} changerStatut={changerStatut} />}
+            />
+            <Route path="/tickets/nouveau" element={<TicketForm onAjouter={ajouterTicket} />} />
+            <Route path="/tickets/:id" element={<DetailTicket tickets={tickets} />} />
+            <Route path="*" element={<PageIntrouvable />} />
+          </Routes>
+        )}
+      </main>
     </div>
   );
 }

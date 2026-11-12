@@ -1,0 +1,27 @@
+{
+  "tickets": [
+    {
+      "id": "1",
+      "titre": "Imprimante en panne",
+      "auteur": "M. Durand",
+      "priorite": "Haute",
+      "statut": "Ouvert"
+    },
+    {
+      "id": "2",
+      "titre": "Accès VPN refusé",
+      "auteur": "Mme Martin",
+      "priorite": "Moyenne",
+      "statut": "En cours"
+    },
+    {
+      "titre": "proxy",
+      "auteur": "delio",
+      "priorite": "Moyenne",
+      "description": "même avec le proxy rien ne marche",
+      "statut": "Ouvert",
+      "id": "_FPfaXmuMws"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
